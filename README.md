@@ -1,6 +1,6 @@
 # eda_with_postgresql
-```markdown
-# Data Cleaning and EDA with PostgreSQL
+
+---
 
 ## Table of Contents
 1. [Introduction](#1-introduction)
@@ -19,16 +19,24 @@
 9. [Conclusion & Recommendations](#9-conclusion--recommendations)
 10. [Appendix](#10-appendix)
 
+---
+
 ## 1. Introduction
 This project aims to explore and analyze data science salary information by performing data cleaning and exploratory data analysis (EDA) using PostgreSQL. The insights will support the HR team in negotiating salaries for Full-time Data Analyst, Data Scientist, and Data Engineer candidates.
+
+---
 
 ## 2. Objectives
 - Ensure data quality through cleaning and validation.
 - Calculate the average salary in USD for Full-time Data Analyst, Data Scientist, and Data Engineer roles at experience level EN.
 - Present findings in tables and visualizations to support HR decision-making.
 
+---
+
 ## 3. Data Sources
 - Kaggle dataset: [ds-salary](https://www.kaggle.com/datasets/hoangphihung44/ds-salary)
+
+---
 
 ## 4. Setup & Environment
 1. Install PostgreSQL v17 and pgAdmin 4.
@@ -38,6 +46,8 @@ This project aims to explore and analyze data science salary information by perf
    pip install psycopg2 pandas
    ```
 4. Configure a `.env` file for database credentials.
+
+---
 
 ## 5. Database Schema
 Table: `ds_salaries_data`
@@ -55,6 +65,8 @@ Table: `ds_salaries_data`
 | remote_ratio        | INTEGER   | Remote work percentage (0, 50, 100) |
 | company_location    | TEXT      | Company location                    |
 | company_size        | TEXT      | Company size (S, M, L)              |
+
+---
 
 ## 6. Data Ingestion
 ```sql
@@ -74,6 +86,8 @@ CREATE TABLE IF NOT EXISTS public.ds_salaries_data (
 
 \copy ds_salaries_data FROM 'path/to/ds_salaries.csv' WITH CSV HEADER;
 ```
+
+---
 
 ## 7. Data Cleaning
 - **Missing Values:**
@@ -103,6 +117,8 @@ CREATE TABLE IF NOT EXISTS public.ds_salaries_data (
   - Convert `remote_ratio` to INTEGER.
   - Validate currency codes in `salary_currency`.
 
+---
+
 ## 8. Exploratory Data Analysis (EDA)
 
 ### 8.1 Job Title Distribution
@@ -113,6 +129,7 @@ GROUP BY job_title
 ORDER BY count DESC
 LIMIT 10;
 ```
+> ![Job Title Distribution Screenshot](screenshots/job_title_distribution.jpg)
 
 ### 8.2 Experience Level vs. Average Salary
 ```sql
@@ -122,7 +139,7 @@ FROM ds_salaries_data
 GROUP BY experience_level
 ORDER BY avg_salary DESC;
 ```
-
+> ![Experience Level vs. Average Salary Screenshot](screenshots/experience_level_vs_average_salary.jpg)
 
 ### 8.3 Employment Type vs. Average Salary
 ```sql
@@ -132,6 +149,7 @@ FROM ds_salaries_data
 GROUP BY employment_type
 ORDER BY avg_salary DESC;
 ```
+> ![Employment Type vs. Average Salary Screenshot](screenshots/employment_type_vs_average_salary.jpg)
 
 ### 8.4 Remote Work Distribution
 ```sql
@@ -140,6 +158,7 @@ FROM ds_salaries_data
 GROUP BY remote_ratio
 ORDER BY remote_ratio;
 ```
+> ![Remote Work Distribution Screenshot](screenshots/remote_work_distribution.jpg)
 
 ### 8.5 HR-Specific Analysis (FT & EN)
 ```sql
@@ -152,19 +171,26 @@ WHERE job_title IN ('Data Engineer', 'Data Scientist', 'Data Analyst')
 GROUP BY job_title
 ORDER BY avg_salary DESC;
 ```
+> ![HR-Specific Analysis Screenshot](screenshots/hr_specific_analysis.jpg)
 
+
+---
 
 ## 9. Conclusion & Recommendations
 - **Data Engineer** has the highest average salary (91,525.74 USD).
 - **Data Scientist** follows (73,917.91 USD).
 - **Data Analyst** ranks third (61,284.48 USD).
 
+---
+
 **Recommendations:**
 1. HR can adjust salary offers based on these benchmarks.
 2. Monitor annual salary trends for ongoing updates.
 3. Explore additional factors such as company size or location for deeper insights.
 
+---
+
 ## 10. Appendix
 - Full SQL scripts: `sql/01_ingestion.sql`, `sql/02_cleaning.sql`, `sql/03_eda.sql`
-```
+
 
